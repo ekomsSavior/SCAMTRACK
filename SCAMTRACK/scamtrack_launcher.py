@@ -7,7 +7,7 @@ import requests
 import socket
 
 def banner():
-    print("""
+    print(r"""
  ▄▀▀▀▀▄  ▄▀▄▄▄▄   ▄▀▀█▄   ▄▀▀▄ ▄▀▄  ▄▀▀▀█▀▀▄  ▄▀▀▄▀▀▀▄  ▄▀▀█▄   ▄▀▄▄▄▄   ▄▀▀▄ █ 
 █ █   ▐ █ █    ▌ ▐ ▄▀ ▀▄ █  █ ▀  █ █    █  ▐ █   █   █ ▐ ▄▀ ▀▄ █ █    ▌ █  █ ▄▀ 
    ▀▄   ▐ █        █▄▄▄█ ▐  █    █ ▐   █     ▐  █▀▀█▀    █▄▄▄█ ▐ █      ▐  █▀▄  
@@ -27,24 +27,18 @@ def is_port_open(host, port):
 def launch_ngrok():
     print("🚀 Launching Ngrok tunnel on port 5000...")
 
-    # Kill existing ngrok silently
-    subprocess.call(["pkill", "-f", "ngrok"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(1)
-
-    # Start ngrok
-    subprocess.Popen(["./ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
+    subprocess.Popen(["/usr/local/bin/ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print("⏳ Waiting for Ngrok to initialize...", end="", flush=True)
 
-    # Wait until ngrok is listening
-    for _ in range(15):
+    for _ in range(20):
         if is_port_open("localhost", 4040):
             print(" ✅")
             break
         time.sleep(1)
         print(".", end="", flush=True)
     else:
-        print("\n❌ Ngrok API never became available. Check if authtoken is set and try again.")
+        print("\n❌ Ngrok API never became available. Make sure the authtoken is set:")
+        print("   ngrok config add-authtoken <your_token>")
         return
 
     try:
@@ -56,7 +50,7 @@ def launch_ngrok():
         else:
             print("❌ No active tunnels found.")
     except Exception as e:
-        print(f"❌ Failed to connect to Ngrok API: {e}")
+        print(f"\n❌ Failed to connect to Ngrok API: {e}")
 
 def main():
     banner()
