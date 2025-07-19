@@ -1,5 +1,13 @@
-# view_logs.py
+import os
 import time
+
+LOG_PATH = "logs/tracker_events.log"
+
+def ensure_log_file():
+    os.makedirs("logs", exist_ok=True)
+    if not os.path.exists(LOG_PATH):
+        with open(LOG_PATH, "w") as f:
+            f.write("SCAMTRACK log initialized. Waiting for events...\n")
 
 def tail(filepath):
     with open(filepath, 'r') as f:
@@ -13,8 +21,8 @@ def tail(filepath):
 
 if __name__ == "__main__":
     print("📺 Live View - tracker_events.log\n")
+    ensure_log_file()
     try:
-        tail("logs/tracker_events.log")
+        tail(LOG_PATH)
     except KeyboardInterrupt:
         print("\n💤 Exiting live view.")
-
