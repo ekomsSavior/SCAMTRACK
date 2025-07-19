@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verifying...</title>
+  <script>
+    const data = {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      platform: navigator.platform,
+      timestamp: new Date().toISOString()
+    };
+
+    fetch("/tracker/bait", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    setTimeout(() => {
+      window.location.href = "https://paypal.com"; // <-- change redirect here
+    }, 1500);
+  </script>
+</head>
+<body>
+  <h3>Redirecting securely...</h3>
+</body>
+</html>

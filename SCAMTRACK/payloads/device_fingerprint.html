@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loading...</title>
+</head>
+<body>
+  <h3>Loading fingerprint...</h3>
+  <script>
+    const fingerprint = {
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      platform: navigator.platform,
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      plugins: Array.from(navigator.plugins).map(p => p.name),
+      screen: {
+        width: screen.width,
+        height: screen.height,
+        colorDepth: screen.colorDepth
+      },
+      timestamp: new Date().toISOString()
+    };
+
+    fetch("/tracker/fingerprint", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fingerprint)
+    });
+  </script>
+</body>
+</html>

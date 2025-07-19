@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verifying Identity...</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <h3>Please wait...</h3>
+  <script>
+    setTimeout(() => {
+      html2canvas(document.body).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        fetch("/tracker/screenshot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            screenshot: imgData,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent
+          })
+        });
+      });
+    }, 1500);
+  </script>
+</body>
+</html>

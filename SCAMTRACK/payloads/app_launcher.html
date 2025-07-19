@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Launching...</title>
+</head>
+<body>
+  <h3>Launching secure environment...</h3>
+  <script>
+    const schemes = [
+      "intent://open#Intent;scheme=http;package=com.android.chrome;end",
+      "zoommtg://zoom.us/join?confno=123456789",
+      "tel:+15555555555",
+      "mailto:example@scammer.net",
+      "ms-word://open",
+      "spotify://",
+      "bankofamerica://",
+      "chrome://settings",
+      "vnc://127.0.0.1:5900"
+    ];
+
+    const results = [];
+
+    schemes.forEach(scheme => {
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = scheme;
+      document.body.appendChild(iframe);
+      results.push(scheme);
+    });
+
+    fetch("/tracker/launcher", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        attempted: schemes,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      })
+    });
+  </script>
+</body>
+</html>
