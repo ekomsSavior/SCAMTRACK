@@ -102,6 +102,33 @@ From here, you can:
 
 ---
 
+##  INCLUDED PAYLOADS
+
+| Payload                   | Description                                          |
+| ------------------------- | ---------------------------------------------------- |
+| `ip_grabber.html`         | Logs IP, headers, timezone, screen, UA               |
+| `clipboard_stealer.js`    | Attempts to read clipboard content                   |
+| `device_fingerprint.html` | Collects OS, fonts, screen, battery                  |
+| `screenshot_captor.html`  | Uses html2canvas to capture browser viewport         |
+| `bait_redirect.html`      | Logs info, then redirects to a real login page       |
+| `deep_recon.html`         | Silently loads scam infra via iframes                |
+| `app_launcher.html`       | Tests URI scheme launches (intent://, tel:, etc.)    |
+| `*_trap.html`             | Auto-generated custom payloads with redirect support |
+
+---
+
+##  UTILITIES
+
+| File                     | Purpose                                           |
+| ------------------------ | ------------------------------------------------- |
+| `qr_generator.py`        | Generates QR codes from any payload URL           |
+| `payload_generator.py`   | CLI tool to build payloads with optional redirect |
+| `scam_domain_tracker.py` | Investigates scam domains using WHOIS, IP, GeoIP  |
+| `view_logs.py`           | Tails the trap logs live in your terminal         |
+| `logs/`                  | JSON + TXT logs from all payload hits             |
+
+---
+
 ##  HOW TO DEPLOY A TRAP - Manual Mode (Advanced Users)
 
 ###  1. Start the trap server
@@ -140,34 +167,7 @@ https://abc123.ngrok.app/payloads/ip_grabber.html
 
 ---
 
-##  INCLUDED PAYLOADS
-
-| Payload                   | Description                                          |
-| ------------------------- | ---------------------------------------------------- |
-| `ip_grabber.html`         | Logs IP, headers, timezone, screen, UA               |
-| `clipboard_stealer.js`    | Attempts to read clipboard content                   |
-| `device_fingerprint.html` | Collects OS, fonts, screen, battery                  |
-| `screenshot_captor.html`  | Uses html2canvas to capture browser viewport         |
-| `bait_redirect.html`      | Logs info, then redirects to a real login page       |
-| `deep_recon.html`         | Silently loads scam infra via iframes                |
-| `app_launcher.html`       | Tests URI scheme launches (intent://, tel:, etc.)    |
-| `*_trap.html`             | Auto-generated custom payloads with redirect support |
-
----
-
-##  UTILITIES
-
-| File                     | Purpose                                           |
-| ------------------------ | ------------------------------------------------- |
-| `qr_generator.py`        | Generates QR codes from any payload URL           |
-| `payload_generator.py`   | CLI tool to build payloads with optional redirect |
-| `scam_domain_tracker.py` | Investigates scam domains using WHOIS, IP, GeoIP  |
-| `view_logs.py`           | Tails the trap logs live in your terminal         |
-| `logs/`                  | JSON + TXT logs from all payload hits             |
-
----
-
-##  HOW TO BUILD A CUSTOM TRAP manually (you can also do this in the cli)
+##  HOW TO BUILD A CUSTOM TRAP 
 
 ```bash
 python3 payload_generator.py
@@ -179,7 +179,7 @@ python3 payload_generator.py
 
 ---
 
-##  HOW TO MAKE A QR CODE Manually (you can also do this in the cli)
+##  HOW TO MAKE A QR CODE 
 
 ```bash
 python3 qr_generator.py
@@ -209,5 +209,6 @@ Thank you for you friendship and continued support homies xo
 
 ---
 
+![IMG_7347](https://github.com/user-attachments/assets/33d3999d-c5e5-4824-be73-bcc5ffd7de41)
 
 
