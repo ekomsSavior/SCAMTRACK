@@ -1,6 +1,9 @@
 # scamtrack_launcher.py
 
 import os
+import time
+import requests
+import subprocess
 
 def banner():
     print("""
@@ -28,19 +31,38 @@ def main():
 
     if choice == "1":
         os.system("python3 -m server.flask_server")
+
     elif choice == "2":
-        os.system("./ngrok http 5000 --config ~/.config/ngrok/ngrok.yml")
+        print("🚀 Launching Ngrok tunnel on port 5000...")
+        try:
+            subprocess.Popen(["/usr/bin/env", "bash", "-c", "./ngrok http 5000"], cwd=os.getcwd())
+            time.sleep(5)
+            res = requests.get("http://localhost:4040/api/tunnels")
+            tunnels = res.json().get("tunnels", [])
+            if tunnels:
+                public_url = tunnels[0]["public_url"]
+                print(f"Ngrok Public URL: {public_url}")
+            else:
+                print("❌ Ngrok tunnel failed to initialize.")
+        except Exception as e:
+            print(f"❌ Failed to launch Ngrok: {e}")
+
     elif choice == "3":
         os.system("python3 view_logs.py")
+
     elif choice == "4":
         os.system("xdg-open payloads")
+
     elif choice == "5":
         os.system("python3 qr_generator.py")
+
     elif choice == "6":
         os.system("python3 scam_domain_tracker.py")
+
     elif choice == "7":
         print("Bye 👋")
         exit()
+
     else:
         print("Invalid option. Try again.")
 
