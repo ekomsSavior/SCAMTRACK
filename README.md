@@ -204,8 +204,8 @@ python3 qr_generator.py
 
 ---
 
-Thank you for you friendship and continued support homies xo
-### -ek0mssavi0r
+Thank you for you friendship and continued support homies. sending hugs always.
+### xox _ek0mssavi0r
 
 ---
 
