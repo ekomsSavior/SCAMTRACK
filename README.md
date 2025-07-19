@@ -64,27 +64,103 @@ sudo mv ngrok /usr/local/bin/
 
 ---
 
-##  LAUNCH MODE (RECOMMENDED)
+## USAGE — CLI MODE (RECOMMENDED)
 
-From inside `SCAMTRACK/SCAMTRACK`:
+From the `SCAMTRACK/SCAMTRACK` folder:
 
 ```bash
 python3 scamtrack_launcher.py
 ```
 
-Then choose from:
+You’ll see:
 
-* Start Flask Trap Server
-* Launch Ngrok Tunnel
-* View Logs in Terminal
-* Generate QR Code
-* Build Custom Payload
-* Investigate Scam Domain
-
->  NOTE: Flask and Ngrok still require separate terminal windows for now. Background support coming soon.
+```
+[1] Start Flask Trap Server
+[2] Launch Ngrok Tunnel
+[3] View Live Logs
+[4] Open Payloads Folder
+[5] Generate QR Code
+[6] Recon a Suspicious Scam Domain
+[7] Exit
+```
 
 ---
 
+### Step-by-Step Instructions for CLI Use
+
+** Terminal 1: Start Flask Server**
+
+```bash
+cd SCAMTRACK/SCAMTRACK
+python3 scamtrack_launcher.py
+```
+
+Choose option `1`
+
+Wait for:
+
+```
+ * Running on http://0.0.0.0:5000
+```
+
+---
+
+** Terminal 2: Start Ngrok Tunnel**
+
+```bash
+cd SCAMTRACK/SCAMTRACK
+python3 scamtrack_launcher.py
+```
+
+Choose option `2`
+
+Ngrok will display a link like:
+
+```
+https://abc123.ngrok.app 
+```
+
+---
+
+** Trap Delivery**
+
+Grab any payload from this directory:
+
+```bash
+SCAMTRACK/SCAMTRACK/payloads/
+```
+
+Send trap link like:
+
+```
+https://abc123.ngrok.app/payloads/ip_grabber.html
+```
+
+Anyone who clicks this gets tracked.
+All logs are saved to:
+
+```
+SCAMTRACK/SCAMTRACK/logs/tracker_events.log
+```
+
+---
+
+###  Terminal 3 (Optional): View Logs Live
+
+```bash
+cd SCAMTRACK/SCAMTRACK
+python3 scamtrack_launcher.py
+```
+
+Choose option `3`
+
+or
+
+Generate QR Code from your link:
+
+choose option `5`
+
+---
 ##  INCLUDED PAYLOADS
 
 | Payload                   | Description                                           |
