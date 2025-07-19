@@ -43,13 +43,10 @@ git clone https://github.com/ekomsSavior/SCAMTRACK.git
 cd SCAMTRACK
 ```
 
-```bash
-pip install -r requirements.txt
-```
-OR to get the proper flask version you may need to run:
 
 ```bash
-pip install -r requirements.txt --break-system-packages
+sudo apt update && sudo apt install -y python3 python3-pip
+pip3 install flask requests python-whois qrcode --break-system-packages
 ```
 
 ### Install and Set Up Ngrok
