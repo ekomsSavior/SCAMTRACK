@@ -29,7 +29,7 @@ def main():
     if choice == "1":
         os.system("python3 -m server.flask_server")
     elif choice == "2":
-        os.system("./ngrok http 5000")
+        os.system("../ngrok http 5000")
     elif choice == "3":
         os.system("python3 view_logs.py")
     elif choice == "4":
