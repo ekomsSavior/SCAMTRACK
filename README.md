@@ -69,6 +69,7 @@ ngrok config add-authtoken $YOUR_AUTHTOKEn
 Run:
 
 ```bash
+cd ~/SCAMTRACK/SCAMTRACK                                    
 python3 scamtrack_launcher.py
 ```
 
