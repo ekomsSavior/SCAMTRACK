@@ -1,4 +1,5 @@
 # scamtrack_launcher.py
+
 import os
 
 def banner():
@@ -10,18 +11,18 @@ def banner():
  █▀▀▀    ▄▀▄▄▄▄▀ █   ▄▀  ▄▀   ▄▀    ▄▀       █     █   █   ▄▀   ▄▀▄▄▄▄▀ ▄▀   █  
  ▐      █     ▐  ▐   ▐   █    █    █         ▐     ▐   ▐   ▐   █     ▐  █    ▐  
         ▐                ▐    ▐    ▐                           ▐        ▐       
-     by ekomsSavi0r    """)
+        by ekomsSavi0r
+    """)
 
 def main():
     banner()
-print("[1] Start Flask Trap Server")
-print("[2] Launch Ngrok Tunnel")
-print("[3] View Live Logs")
-print("[4] Open Payloads Folder")
-print("[5] Generate QR Code from Payload Link")
-print("[6] Recon a Suspicious Scam Domain")
-print("[7] Exit\n")
-
+    print("[1] Start Flask Trap Server")
+    print("[2] Launch Ngrok Tunnel")
+    print("[3] View Live Logs")
+    print("[4] Open Payloads Folder")
+    print("[5] Generate QR Code from Payload Link")
+    print("[6] Recon a Suspicious Scam Domain")
+    print("[7] Exit\n")
 
     choice = input("Select option: ")
 
@@ -37,8 +38,11 @@ print("[7] Exit\n")
         os.system("python3 qr_generator.py")
     elif choice == "6":
         os.system("python3 scam_domain_tracker.py")
-    else:
+    elif choice == "7":
         print("Bye 👋")
+        exit()
+    else:
+        print("Invalid option. Try again.")
 
 if __name__ == "__main__":
     main()
