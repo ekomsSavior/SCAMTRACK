@@ -26,26 +26,15 @@ use SCAMTRACK in conjuction with PHISH HUNTER PRO https://github.com/ekomsSavior
 
 ---
 
-##  INSTALLATION
-
 ###  Requirements
 
 - Python 3.10+  
 - Kali Linux or any Linux distro  
 - Ngrok (Free or Personal Plan)
 
-```bash
-pip install -r requirements.txt
-```
-to get the proper flask version you may need to run:
-
-```bash
-pip install -r requirements.txt --break-system-packages
-```
-
 ---
 
-##  USAGE
+## INSTALL
 
 ### 1. Clone the repo
 
@@ -53,6 +42,16 @@ pip install -r requirements.txt --break-system-packages
 git clone https://github.com/ekomsSavior/SCAMTRACK.git
 cd SCAMTRACK
 ```
+
+```bash
+pip install -r requirements.txt
+```
+OR to get the proper flask version you may need to run:
+
+```bash
+pip install -r requirements.txt --break-system-packages
+```
+
 ### Install and Set Up Ngrok
 
 ```bash
@@ -61,8 +60,8 @@ unzip ngrok-stable-linux-amd64.zip
 rm ngrok-stable-linux-amd64.zip
 chmod +x ngrok
 ```
-###
-Then authenticate Ngrok:
+
+### authenticate Ngrok:
 
 ```bash
 ngrok config add-authtoken $YOUR_AUTHTOKEn
