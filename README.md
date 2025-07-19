@@ -51,10 +51,9 @@ pip3 install flask requests python-whois qrcode --break-system-packages
 ### 3. Install & Set Up Ngrok
 
 ```bash
-wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
-unzip ngrok-stable-linux-amd64.zip
-rm ngrok-stable-linux-amd64.zip
-chmod +x ngrok
+wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+tar -xvzf ngrok-v3-stable-linux-amd64.tgz
+sudo mv ngrok /usr/local/bin/
 ```
 
 ### 4. Authenticate Ngrok (REQUIRED or you'll get `ERR_NGROK_4018`)
