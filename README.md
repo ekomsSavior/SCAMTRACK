@@ -1,45 +1,45 @@
 # SCAMTRACK
 
-Track and trace with SCAMTRACK  
+**Track. Trap. Trace.**
 **by ekomsSavi0r**
 
 ![Trap Screenshot](https://github.com/user-attachments/assets/33d3999d-c5e5-4824-be73-bcc5ffd7de41)
 
-SCAMTRACK is a modular phishing trap & scam tracking toolkit.
+SCAMTRACK is a one-click phishing trap generator and scammer tracker.
 
-Pair with [PHISH HUNTER PRO](https://github.com/ekomsSavior/PHISH_HUNTER_PRO) for full-spectrum scammer disruption.
+> Pair with [PHISH HUNTER PRO](https://github.com/ekomsSavior/PHISH_HUNTER_PRO) for full-spectrum scammer disruption.
 
 ---
 
-##  FEATURES
+## FEATURES
 
-- Flask trap server to log scammer interactions
-- Payloads for IP logging, clipboard, screenshots, device fingerprinting
-- Ngrok tunneling for remote trap access
-- QR code trap generator
-- Scam domain recon engine
-- Real-time terminal log viewer
-- CLI launcher for noob-friendly access
-- Modular, open-source, and 100% designed for defenders
+*  One-file CLI to launch Flask + Ngrok + Payload menu
+*  QR code generator for instant trap delivery
+*  Scam domain recon and WHOIS tools
+*  Payloads for IP logging, screenshots, clipboard, and device fingerprinting and more.
+*  Live terminal log viewer
+*  Modular, fast, and noob-friendly
+*  Module to add your own payloads into SCAMTRACKER
+
 
 ---
 
 ##  REQUIREMENTS
 
-- Python 3.10+
-- Kali Linux or any Linux distro
-- Ngrok (Free or Personal Plan)
+* Python 3.10+
+* Kali Linux (or any Linux distro)
+* Ngrok (Free or Personal Plan)
 
 ---
 
-## INSTALLATION
+##  INSTALLATION
 
 ### 1. Clone the Repo
 
 ```bash
 git clone https://github.com/ekomsSavior/SCAMTRACK.git
 cd SCAMTRACK/SCAMTRACK
-````
+```
 
 ### 2. Install Dependencies
 
@@ -56,111 +56,72 @@ tar -xvzf ngrok-v3-stable-linux-amd64.tgz
 sudo mv ngrok /usr/local/bin/
 ```
 
-### 4. Authenticate Ngrok (REQUIRED or you'll get `ERR_NGROK_4018`)
+### 4. Authenticate Ngrok
 
 ```bash
-./ngrok config add-authtoken YOUR_AUTHTOKEN_HERE
+ngrok config add-authtoken YOUR_AUTHTOKEN_HERE
 ```
 
 ---
 
-## USAGE — CLI MODE (RECOMMENDED)
+##  USAGE
 
-From the `SCAMTRACK/SCAMTRACK` folder:
+###  One Command to Rule Them All
 
 ```bash
-python3 scamtrack_launcher.py
+cd SCAMTRACK/SCAMTRACK
+python3 scamtrack_cli.py
 ```
 
-You’ll see:
+You'll be greeted with:
 
 ```
-[1] Start Flask Trap Server
-[2] Launch Ngrok Tunnel
+[1] Build Full Trap (Flask + Ngrok + Payload Picker)
+[2] Upload Your Own Payload
 [3] View Live Logs
-[4] Open Payloads Folder
-[5] Generate QR Code
-[6] Recon a Suspicious Scam Domain
-[7] Exit
+[4] Recon a Suspicious Scam Domain
+[5] Exit
 ```
 
 ---
 
-### Step-by-Step Instructions for CLI Use
+###  Build Full Trap (Option 1)
 
-** Terminal 1: Start Flask Server**
+* Auto-starts Flask on port 5000
+* Auto-launches Ngrok tunnel
+* Lets you pick a payload (IP logger, screenshot, or chained payloads, etc.)
+* Displays public URL and saves QR code
 
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 scamtrack_launcher.py
-```
-
-Choose option `1`
-
-Wait for:
+You’ll get:
 
 ```
- * Running on http://0.0.0.0:5000
-```
-
----
-
-** Terminal 2: Start Ngrok Tunnel**
-
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 scamtrack_launcher.py
-```
-
-Choose option `2`
-
-Ngrok will display a link like:
-
-```
-https://abc123.ngrok.app 
-```
-
----
-
-** Trap Delivery**
-
-Grab any payload from this directory:
-
-```bash
-SCAMTRACK/SCAMTRACK/payloads/
-```
-
-Send trap link like:
-
-```
+Your trap link is ready:
 https://abc123.ngrok.app/payloads/ip_grabber.html
-```
-
-Anyone who clicks this gets tracked.
-All logs are saved to:
-
-```
-SCAMTRACK/SCAMTRACK/logs/tracker_events.log
+QR code saved to: scam_qr/ip_grabber_qr.png
 ```
 
 ---
 
-###  Terminal 3 (Optional): View Logs Live
+###  Real-Time Logs (Option 3)
 
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 scamtrack_launcher.py
+* Shows trap hits live in terminal
+* Logs IP, device, browser, time, and more
+
+All events are saved to:
+
+```
+logs/tracker_events.log
 ```
 
-Choose option `3`
+---
 
-or
+###  Scam Recon (Option 4)
 
-Generate QR Code from your link:
-
-choose option `5`
+* Analyze suspicious domains
+* Checks redirects, WHOIS, IP, and basic infra intel
 
 ---
+
 ##  INCLUDED PAYLOADS
 
 | Payload                   | Description                                           |
@@ -172,114 +133,57 @@ choose option `5`
 | `bait_redirect.html`      | Logs and then redirects (e.g., to PayPal or Gmail)    |
 | `deep_recon.html`         | Loads scam infra inside iframes for passive intel     |
 | `app_launcher.html`       | Triggers URI schemes like `intent://`, `tel:`, etc.   |
-| `*_trap.html`             | Generated payloads with redirect support              |
+| `*_trap.html`             | Custom traps with redirect support                    |
 
 ---
 
-##  UTILITIES
+##  HOW SCAMTRACK WORKS (Behind the Scenes)
 
-| Tool                     | Description                                          |
-| ------------------------ | ---------------------------------------------------- |
-| `qr_generator.py`        | Generates QR codes from payload URLs                 |
-| `payload_generator.py`   | Builds custom traps with optional redirects          |
-| `scam_domain_tracker.py` | WHOIS + redirect + IP tracker for suspicious domains |
-| `view_logs.py`           | Live tail of trap logs in terminal                   |
-| `logs/`                  | JSON + text logs of trap hits                        |
+SCAMTRACK is more than a flashy CLI — it's a trap engine designed to *deliver and log payload activity* using a Flask web server and Ngrok tunnel.
 
----
+Here’s exactly what happens when you launch a trap:
 
-## MANUAL TRAP DEPLOYMENT (ADVANCED)
+1. **Flask Trap Server Starts Locally**
+   → SCAMTRACK runs a local Flask server on `http://localhost:5000`, ready to serve your HTML or JS-based payloads.
+   → Payloads are hosted from the `/payloads/` folder — this includes things like `ip_grabber.html`, `clipboard_stealer.js`, etc.
 
-### 1. Run Flask Server
+2. **Ngrok Connects Your Localhost to the Internet**
+   → SCAMTRACK auto-launches `ngrok http 5000`, which creates a **public HTTPS link** to your local trap server.
+   → Example: `https://abc123.ngrok.app → http://localhost:5000`
+
+3. **Payload is Tied to Public Link**
+   → SCAMTRACK gives you a complete trap URL like:
+   `https://abc123.ngrok.app/payloads/ip_grabber.html`
+   → This URL is safe to send to scammers or load into QR codes.
+
+4. **Victim Clicks the Trap**
+   → When someone clicks your link or scans the QR code:
+
+   * Flask serves the payload
+   * JavaScript logs their IP, browser, OS, screen size, etc.
+   * Logs are written in real-time to: `logs/tracker_events.log`
+
+5. **Optional Logging + QR Code Creation**
+   → SCAMTRACK auto-generates a QR code for the payload URL
+   → Optional Discord alerts can be configured via `webhook_reporter.py`
+   → You can watch hits in real-time using the `View Live Logs` option.
+
+ All of this happens from a single command:
 
 ```bash
-cd SCAMTRACK/SCAMTRACK
-python3 -m server.flask_server
+python3 scamtrack_cli.py
 ```
+--- 
 
-Flask will start at:
+## ☠️ ETHICAL DISCLAIMER
 
-```
-http://localhost:5000
-```
+SCAMTRACK is for **educational and defensive use only**.
+You are fully responsible for how you use this tool.
+Use only on systems and domains you **own** or have **explicit permission** to test.
 
 ---
 
-### 2. In a New Terminal, Start Ngrok
+🕷️ xoxo — ekomsSavi0r
 
-```bash
-cd SCAMTRACK/SCAMTRACK
-./ngrok http 5000
-```
 
-You’ll get a public URL like:
-
-```
-https://abc123.ngrok.app → http://localhost:5000
-```
-
----
-
-### 3. Send a Trap Link
-
-Example payload:
-
-```
-https://abc123.ngrok.app/payloads/ip_grabber.html
-```
-
----
-
-##  BUILD A CUSTOM TRAP
-
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 payload_generator.py
-```
-
-* Name it (`phishbait`)
-* Add redirect (optional)
-* It outputs: `payloads/phishbait_trap.html`
-
----
-
-##  CREATE A QR CODE
-
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 qr_generator.py
-```
-
-* Paste your payload URL
-* Output: `payloads/scamtrack_qr.png`
-
----
-
-##  LOGGING OPTIONS
-
-* All logs stored in `/logs/` (JSON + .txt)
-* Live view:
-
-```bash
-cd SCAMTRACK/SCAMTRACK
-python3 view_logs.py
-```
-
-* Optional Discord alerts via:
-  `server/webhook_reporter.py`
-
----
-
-## ETHICAL DISCLAIMER
-
-SCAMTRACK is for **ethical use only**.
-Use only on systems and domains you **own or have explicit permission to test**.
-
----
-
-**xoxo, ek0mssavi0r**
-
----
-
-![Trap Screenshot](https://github.com/user-attachments/assets/33d3999d-c5e5-4824-be73-bcc5ffd7de41)
 
