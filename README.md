@@ -85,20 +85,48 @@ You'll be greeted with:
 
 ---
 
+
 ###  Build Full Trap (Option 1)
 
-* Auto-starts Flask on port 5000
-* Auto-launches Ngrok tunnel
-* Lets you pick a payload (IP logger, screenshot, or chained payloads, etc.)
-* Displays public URL and saves QR code
+* Auto-launches Flask trap server on port 5000
+* Starts Ngrok tunnel instantly
+* Offers payload picker with all available `.html` and `.js` files
+* Option to chain multiple payloads into one flow
+* NEW! Cloaks final URL using [is.gd](https://is.gd)
+* Offers QR code generation for physical delivery
 
-You’ll get:
+**You’ll see output like:**
 
 ```
-Your trap link is ready:
-https://abc123.ngrok.app/payloads/ip_grabber.html
-QR code saved to: scam_qr/ip_grabber_qr.png
+ Starting Ngrok tunnel on port 5000...
+ Ngrok Public URL: https://abc123.ngrok.app
+
+ Available Payloads:
+[1] app_launcher.html
+[2] bait_redirect.html
+[3] clipboard_stealer.js
+[4] deep_recon.html
+[5] device_fingerprint.html
+[6] grabber.js
+[7] ip_grabber.html
+[8] screenshot_captor.html
+[9] Chain Multiple Payloads
+
+ Shortening URL via is.gd...
+ Shortened: https://is.gd/kN0Pq7
+
+ Your trap link is cloaked:
+https://is.gd/kN0Pq7
+
+ QR Code saved to:
+scam_qr/login_error_qr.png
 ```
+
+---
+
+### Add your own Payload (Option 2)
+
+follow the commands to integrate your payloads into the SCAMTRACK framework.
 
 ---
 
