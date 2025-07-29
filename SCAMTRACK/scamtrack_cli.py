@@ -26,25 +26,25 @@ def is_flask_up(host="127.0.0.1", port=5000):
         return sock.connect_ex((host, port)) == 0
 
 def launch_flask_server():
-    print(" ✅ Launching Flask trap server...")
+    print(" Launching Flask trap server...")
     subprocess.Popen(["python3", "-m", "server.flask_server"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(10):
         if is_flask_up():
-            print(" ✅ Flask server is up and listening on port 5000.")
+            print(" Flask server is up and listening on port 5000.")
             return
         time.sleep(1)
     print(" ❌ Flask server failed to start.")
     exit(1)
 
 def launch_ngrok():
-    print(" 🚀 Starting Ngrok tunnel on port 5000...")
-    subprocess.Popen(["./ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print(" Starting Ngrok tunnel on port 5000...")
+    subprocess.Popen(["ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(5)
     try:
         res = subprocess.check_output(["curl", "-s", "http://localhost:4040/api/tunnels"])
         tunnels = json.loads(res)["tunnels"]
         public_url = tunnels[0]["public_url"]
-        print(f" 🌐 Ngrok Public URL: {public_url}\n")
+        print(f" Ngrok Public URL: {public_url}\n")
         return public_url
     except Exception as e:
         print(f"[!] Ngrok error: {e}")
