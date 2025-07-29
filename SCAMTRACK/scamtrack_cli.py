@@ -33,7 +33,7 @@ def launch_flask_server():
             print(" Flask server is up and listening on port 5000.")
             return
         time.sleep(1)
-    print(" ❌ Flask server failed to start.")
+    print(" Flask server failed to start.")
     exit(1)
 
 def launch_ngrok():
@@ -66,26 +66,26 @@ def shorten_url(long_url):
         res = requests.get("https://is.gd/create.php", params={"format": "simple", "url": long_url})
         if res.status_code == 200:
             short = res.text.strip()
-            print(f" 🔗 Shortened: {short}")
+            print(f" Shortened: {short}")
             return short
     except:
-        print(" ❌ Failed to shorten URL.")
+        print(" Failed to shorten URL.")
     return long_url
 
 def upload_custom_payload():
     path = input(" Path to your payload (.html or .js): ").strip()
     if not os.path.isfile(path):
-        print("❌ File not found.")
+        print(" File not found.")
         return
     dest = os.path.join(PAYLOADS_DIR, os.path.basename(path))
     subprocess.run(["cp", path, dest])
-    print(f" ✅ Payload saved as: {dest}")
+    print(f" Payload saved as: {dest}")
 
 def generate_qr(link, filename_hint="qr_code"):
     qr_path = os.path.join(SCAM_QR_DIR, f"{filename_hint}_qr.png")
     img = qrcode.make(link)
     img.save(qr_path)
-    print(f" ✅ Saved QR code to: {qr_path}")
+    print(f" Saved QR code to: {qr_path}")
 
 def build_chained_payload(selected_payloads):
     full_paths = [os.path.join(PAYLOADS_DIR, list_payloads()[i]) for i in selected_payloads]
@@ -98,13 +98,13 @@ def build_chained_payload(selected_payloads):
     chained = "\n".join(lines)
     with open(os.path.join(PAYLOADS_DIR, CHAINED_FILENAME), "w") as out:
         out.write(chained)
-    print(f" ✅ Created {CHAINED_FILENAME} from:")
+    print(f" Created {CHAINED_FILENAME} from:")
     for i in selected_payloads:
         print(f"  - {list_payloads()[i]}")
     return CHAINED_FILENAME
 
 def trap_payload_picker(public_url):
-    print(" 📦 Available Payloads:")
+    print(" Available Payloads:")
     payloads = list_payloads()
     for i, p in enumerate(payloads, 1):
         print(f"[{i}] {p}")
@@ -112,7 +112,7 @@ def trap_payload_picker(public_url):
 
     choice = input("Select a payload: ").strip()
     if not choice.isdigit():
-        print("❌ Invalid selection.")
+        print(" Invalid selection.")
         return
     choice = int(choice)
 
@@ -122,12 +122,12 @@ def trap_payload_picker(public_url):
             selected_indices = [int(i)-1 for i in indices if i.strip().isdigit()]
             filename = build_chained_payload(selected_indices)
         except:
-            print("❌ Invalid selection.")
+            print(" Invalid selection.")
             return
     elif 1 <= choice <= len(payloads):
         filename = payloads[choice-1]
     else:
-        print("❌ Invalid selection.")
+        print(" Invalid selection.")
         return
 
     original_path = os.path.join(PAYLOADS_DIR, filename)
@@ -138,7 +138,7 @@ def trap_payload_picker(public_url):
     full_link = f"{public_url}/payloads/obf_payloads/{obf_name}"
     short_link = shorten_url(full_link)
 
-    print(f"\n ✅ Your trap link is cloaked:\n{short_link}\n")
+    print(f"\n Your trap link is cloaked:\n{short_link}\n")
 
     q = input("[?] Generate QR code for this link? (y/n): ").lower()
     if q == "y":
@@ -173,16 +173,16 @@ def main_menu():
         elif choice == "2":
             upload_custom_payload()
         elif choice == "3":
-            print(" 📖 Press Ctrl+C to return to menu.")
+            print(" Press Ctrl+C to return to menu.")
             subprocess.call(["tail", "-f", "logs/tracker_events.log"])
         elif choice == "4":
             domain = input(" 🔎 Enter domain to scan: ").strip()
             subprocess.call(["python3", "scam_domain_tracker.py", domain])
         elif choice == "5":
-            print(" 👋 Exiting ScamTrack. Stay safe out there.")
+            print(" Exiting ScamTrack. Stay safe out there.")
             break
         else:
-            print("❌ Invalid choice. Try again.")
+            print(" Invalid choice. Try again.")
 
 if __name__ == "__main__":
     main_menu()
