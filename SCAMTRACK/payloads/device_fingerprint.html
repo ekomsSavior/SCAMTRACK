@@ -20,10 +20,16 @@
       timestamp: new Date().toISOString()
     };
 
+    // Send fingerprint data
     fetch("/tracker/fingerprint", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fingerprint)
+    });
+
+    // Trigger IP + geo logging (passive, backend only)
+    fetch("/tracker/iplog", {
+      method: "GET"
     });
   </script>
 </body>
