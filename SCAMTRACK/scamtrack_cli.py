@@ -26,25 +26,25 @@ def is_flask_up(host="127.0.0.1", port=5000):
         return sock.connect_ex((host, port)) == 0
 
 def launch_flask_server():
-    print(" Launching Flask trap server...")
+    print("  Launching Flask trap server...")
     subprocess.Popen(["python3", "-m", "server.flask_server"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(10):
         if is_flask_up():
-            print(" Flask server is up and listening on port 5000.")
+            print("  Flask server is up and listening on port 5000.")
             return
         time.sleep(1)
-    print(" Flask server failed to start.")
+    print("  Flask server failed to start.")
     exit(1)
 
 def launch_ngrok():
-    print(" Starting Ngrok tunnel on port 5000...")
-    subprocess.Popen(["ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print("  Starting Ngrok tunnel on port 5000...")
+    subprocess.Popen(["./ngrok", "http", "5000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(5)
     try:
         res = subprocess.check_output(["curl", "-s", "http://localhost:4040/api/tunnels"])
         tunnels = json.loads(res)["tunnels"]
         public_url = tunnels[0]["public_url"]
-        print(f" Ngrok Public URL: {public_url}\n")
+        print(f"  Ngrok Public URL: {public_url}\n")
         return public_url
     except Exception as e:
         print(f"[!] Ngrok error: {e}")
@@ -62,14 +62,14 @@ def obfuscate_filename(original_filename):
 
 def shorten_url(long_url):
     try:
-        print(" 🔧 Shortening URL via is.gd...")
+        print("  Shortening URL via is.gd...")
         res = requests.get("https://is.gd/create.php", params={"format": "simple", "url": long_url})
         if res.status_code == 200:
             short = res.text.strip()
-            print(f" Shortened: {short}")
+            print(f"  Shortened: {short}")
             return short
     except:
-        print(" Failed to shorten URL.")
+        print("  Failed to shorten URL.")
     return long_url
 
 def upload_custom_payload():
@@ -79,13 +79,13 @@ def upload_custom_payload():
         return
     dest = os.path.join(PAYLOADS_DIR, os.path.basename(path))
     subprocess.run(["cp", path, dest])
-    print(f" Payload saved as: {dest}")
+    print(f"  Payload saved as: {dest}")
 
 def generate_qr(link, filename_hint="qr_code"):
     qr_path = os.path.join(SCAM_QR_DIR, f"{filename_hint}_qr.png")
     img = qrcode.make(link)
     img.save(qr_path)
-    print(f" Saved QR code to: {qr_path}")
+    print(f"  Saved QR code to: {qr_path}")
 
 def build_chained_payload(selected_payloads):
     full_paths = [os.path.join(PAYLOADS_DIR, list_payloads()[i]) for i in selected_payloads]
@@ -98,13 +98,13 @@ def build_chained_payload(selected_payloads):
     chained = "\n".join(lines)
     with open(os.path.join(PAYLOADS_DIR, CHAINED_FILENAME), "w") as out:
         out.write(chained)
-    print(f" Created {CHAINED_FILENAME} from:")
+    print(f"  Created {CHAINED_FILENAME} from:")
     for i in selected_payloads:
         print(f"  - {list_payloads()[i]}")
     return CHAINED_FILENAME
 
 def trap_payload_picker(public_url):
-    print(" Available Payloads:")
+    print("  Available Payloads:")
     payloads = list_payloads()
     for i, p in enumerate(payloads, 1):
         print(f"[{i}] {p}")
@@ -138,7 +138,7 @@ def trap_payload_picker(public_url):
     full_link = f"{public_url}/payloads/obf_payloads/{obf_name}"
     short_link = shorten_url(full_link)
 
-    print(f"\n Your trap link is cloaked:\n{short_link}\n")
+    print(f"\n  Your trap link is cloaked:\n{short_link}\n")
 
     q = input("[?] Generate QR code for this link? (y/n): ").lower()
     if q == "y":
@@ -173,13 +173,13 @@ def main_menu():
         elif choice == "2":
             upload_custom_payload()
         elif choice == "3":
-            print(" Press Ctrl+C to return to menu.")
+            print("  Press Ctrl+C to return to menu.")
             subprocess.call(["tail", "-f", "logs/tracker_events.log"])
         elif choice == "4":
-            domain = input(" 🔎 Enter domain to scan: ").strip()
+            domain = input("  Enter domain to scan: ").strip()
             subprocess.call(["python3", "scam_domain_tracker.py", domain])
         elif choice == "5":
-            print(" Exiting ScamTrack. Stay safe out there.")
+            print("  Exiting ScamTrack. Stay safe out there.")
             break
         else:
             print(" Invalid choice. Try again.")
