@@ -7,7 +7,7 @@ import os
 from datetime import datetime, timezone
 
 def scam_recon():
-    print("🔎 SCAMTRACK Domain Recon\n")
+    print(" SCAMTRACK Domain Recon\n")
     domain = input("Enter suspicious domain or link (e.g., paypal-help.cc): ").strip()
 
     # Clean domain for filename & DNS resolution
@@ -51,7 +51,7 @@ def scam_recon():
     with open(filename, 'w') as f:
         json.dump(report, f, indent=2)
 
-    print(f"\n✅ Recon report saved to: {filename}")
+    print(f"\n Recon report saved to: {filename}")
 
 if __name__ == "__main__":
     scam_recon()
