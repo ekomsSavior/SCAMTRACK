@@ -35,7 +35,7 @@ def index():
     ]
 
     return render_template_string(f"""
-    <h1>📦 SCAMTRACK Payload Server</h1>
+    <h1> SCAMTRACK Payload Server</h1>
     <p>Select a payload below:</p>
     <ul>
         {''.join(links)}
@@ -81,5 +81,5 @@ def lazy_payload_redirect(filename):
     return redirect(f"/payloads/{filename}.html")
 
 if __name__ == '__main__':
-    print("🔥 SCAMTRACK Flask Payload Server running on http://localhost:5000")
+    print(" SCAMTRACK Flask Payload Server running on http://localhost:5000")
     app.run(host='0.0.0.0', port=5000)
